@@ -67,9 +67,9 @@ app.get(
         algorithms: ['HS256'],
       });
       console.log('jwt is secure');
-      res.statusCode(200);
+      res.sendStatus(200); 
     } catch (error) {
-      // console.log('jwt error',error)
+      console.log('jwt error',error)
     }
   }
 );
