@@ -8,7 +8,7 @@ const helmet = require('helmet');
 const morgan = require('morgan');
 require('dotenv').config();
 const jwt = require('jsonwebtoken');
-const expressJwt = require('express-jwt')
+const expressJwt = require('express-jwt');
 
 const csrfProtection = csurf({ cookie: true });
 
@@ -57,18 +57,22 @@ app.get('/api/get-me', async (req, res) => {
     return await res.status(400).send('Error logging in. Try again.');
   }
 });
-app.get('/api/is-secure', async (req, res) => {
-  try {
-    expressJwt({
-      getToken: (req, res) => req.cookies.token,
-      secret: 'supersecretkey',
-      algorithms: ['HS256'],
-    })
-    console.log('jwt result', result) 
-  } catch (error) {
-    console.log('jwt error',error)
+app.get(
+  '/api/is-secure',
+  async (req, res) => {
+    try {
+      expressJwt({
+        getToken: (req, res) => req.cookies.token,
+        secret: 'supersecretkey',
+        algorithms: ['HS256'],
+      });
+      console.log('jwt is secure');
+      res.statusCode(200);
+    } catch (error) {
+      // console.log('jwt error',error)
+    }
   }
-})
+);
 // app.use('/api', authRoutes)
 // app.use('/api', creatorRoutes)
 // app.use('/api', fieldRoutes)
