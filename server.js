@@ -57,14 +57,13 @@ app.get('/api/get-me', async (req, res) => {
     return await res.status(400).send('Error logging in. Try again.');
   }
 });
-
-app.get('/api/is-secure', expressJwt({
-  getToken: (req, res) => req.cookies.token,
-  secret: 'supersecretkey',
-  algorithms: ['HS256'],
-}),  async (req, res) => {
+app.get('/api/is-secure', async (req, res) => {
   try {
-    res.sendStatus(200);
+    expressJwt({
+      getToken: (req, res) => req.cookies.token,
+      secret: 'supersecretkey',
+      algorithms: ['HS256'],
+    })
     console.log('jwt result', result) 
   } catch (error) {
     console.log('jwt error',error)
