@@ -8,6 +8,7 @@ const helmet = require('helmet');
 const morgan = require('morgan');
 require('dotenv').config();
 const jwt = require('jsonwebtoken');
+const expressJwt = require('express-jwt')
 
 const csrfProtection = csurf({ cookie: true });
 
@@ -30,7 +31,7 @@ app.use(cookieParser());
 app.use(morgan('dev'));
 
 // routes
-app.use('/api/get-me', async (req, res) => {
+app.get('/api/get-me', async (req, res) => {
   try {
     const userId = 1234;
     const token = jwt.sign({ _id: userId }, 'supersecretkey', {
@@ -46,12 +47,29 @@ app.use('/api/get-me', async (req, res) => {
     console.log('login headers', JSON.stringify(req.headers));
 
     // send user as json response
-    res.json('Hi');
+    res.json({
+      name: 'Sonny',
+      age: 43,
+      hobbies: ['drawing', 'electronic music', 'Smash Bros', 'coffee'],
+    });
   } catch (err) {
     console.log(err);
     return await res.status(400).send('Error logging in. Try again.');
   }
 });
+
+app.get('/api/is-secure', expressJwt({
+  getToken: (req, res) => req.cookies.token,
+  secret: 'supersecretkey',
+  algorithms: ['HS256'],
+}),  async (req, res) => {
+  try {
+    res.sendStatus(200);
+    console.log('jwt result', result) 
+  } catch (error) {
+    console.log('jwt error',error)
+  }
+})
 // app.use('/api', authRoutes)
 // app.use('/api', creatorRoutes)
 // app.use('/api', fieldRoutes)
