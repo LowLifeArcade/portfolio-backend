@@ -21,7 +21,8 @@ app.use(
   cors({
     origin: [
       'http://localhost:3000',
-      'https://portfolio-tau-six-92.vercel.app/',
+      'https://portfolio-tau-six-92.vercel.app',
+      'https://portfolio-git-main-lowlifearcade.vercel.app'
     ],
     credentials: true,
   })
@@ -79,8 +80,7 @@ app.use('/api/is-secure', async (req, res) => {
 app.use(csrfProtection);
 
 app.get('/api/csrf-token', (req, res) => {
-  res.json({ csrfToken: req.csrfToken() });
-  console.log(JSON.stringify(req.headers));
+  res.render({ csrfToken: req.csrfToken() });
 });
 
 // db connection
