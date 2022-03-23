@@ -18,7 +18,10 @@ const app = express();
 app.use(helmet());
 app.use(
   cors({
-    origin: ['http://localhost:3000'],
+    origin: [
+      'http://localhost:3000',
+      'https://portfolio-tau-six-92.vercel.app/',
+    ],
     credentials: true,
   })
 );
