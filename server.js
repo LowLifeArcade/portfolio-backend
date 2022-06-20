@@ -18,14 +18,7 @@ const app = express();
 // apply middlewares
 app.use(helmet());
 app.use(
-  cors({
-    origin: [
-      'http://localhost:3000',
-      'https://portfolio-tau-six-92.vercel.app',
-      'https://portfolio-git-main-lowlifearcade.vercel.app'
-    ],
-    credentials: true,
-  })
+  cors()
 );
 app.use(express.json({ limit: '10mb' }));
 app.use(cookieParser());
